@@ -1,26 +1,52 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import DropDown from "./components/DropDown";
+import { DropDownChangeEvent } from "./components/DropDown/DropDown";
+import Layout from "./components/Layout";
 
-function App() {
+const options = [
+  "VW",
+  "Audi",
+  "Mercedes",
+  "BMW",
+  "Lexus",
+  "Honda",
+  "Peugeot",
+  "Renault",
+  "Lada",
+  "Volvo",
+  "Saab",
+  "Man",
+  "GMC",
+  "Subaru",
+];
+
+const App = () => {
+  const [value, setValue] = useState(options[6]);
+
+  const onChange = (e: DropDownChangeEvent) => {
+    console.log(e.target.value);
+
+    setValue(e.target.value);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Layout>
+      <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+        {/* Uncontrolled */}
+        <DropDown
+          options={options}
+          inputProps={{ placeholder: "Choose car" }}
+        />
+        {/* Controlled */}
+        <DropDown
+          onChange={onChange}
+          options={options}
+          value={value}
+          inputProps={{ placeholder: "Choose car" }}
+        />
+      </div>
+    </Layout>
   );
-}
+};
 
 export default App;
